@@ -15,7 +15,7 @@ public class TestFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d("TestFragment", "onCreate was called");
+        Log.d("TestFragment", "onCreateView was called");
         return inflater.inflate(R.layout.fragment_test, container, false);
     }
 }
