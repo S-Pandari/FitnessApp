@@ -1,4 +1,5 @@
 package com.example.fitness.Pages.SearchPage;
+import com.example.fitness.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;

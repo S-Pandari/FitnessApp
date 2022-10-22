@@ -1,4 +1,5 @@
 package com.example.fitness.Pages.ViewExercise;
+import com.example.fitness.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 
