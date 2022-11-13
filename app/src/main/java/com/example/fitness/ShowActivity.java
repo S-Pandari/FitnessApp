@@ -53,7 +53,7 @@ public class ShowActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         list.clear();
                         for (DocumentSnapshot snapshot : task.getResult()) {
-                            Model model = new Model(snapshot.getString("id"), snapshot.getString("name"), snapshot.getString("desc"));
+                            Model model = new Model(snapshot.getString("id"), snapshot.getString("name"), snapshot.getString("desc"), snapshot.getString("url"));
                             list.add(model);
                         }
                         adapter.notifyDataSetChanged();

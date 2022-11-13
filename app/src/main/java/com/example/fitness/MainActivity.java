@@ -4,8 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+
+import com.example.fitness.Pages.MuscleExerciseList.MuscleExerciseListActivity;
+import com.example.fitness.Pages.SearchPage.SearchPageActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,9 +17,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FragmentManager fm = getSupportFragmentManager();
-        Fragment TestFragment = new TestFragment();
-        fm.beginTransaction().setReorderingAllowed(true).add(R.id.fragment_container, TestFragment).commit();
+
+        startActivity(new Intent(this, MuscleExerciseListActivity.class));
+
+
+
+//        FragmentManager fm = getSupportFragmentManager();
+//        Fragment TestFragment = new TestFragment();
+//        fm.beginTransaction().setReorderingAllowed(true).add(R.id.fragment_container, TestFragment).commit();
         Log.d("MainActivity", "onCreate was called");
     }
 

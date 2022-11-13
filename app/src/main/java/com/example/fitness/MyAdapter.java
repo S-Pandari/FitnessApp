@@ -11,6 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fitness.Pages.MuscleExerciseList.MuscleExerciseListActivity;
+import com.example.fitness.Pages.ViewExercise.ViewExercise;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -36,9 +38,24 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         bundle.putString("uId", item.getId());
         bundle.putString("uName", item.getName());
         bundle.putString("uDesc", item.getDesc());
-        Intent intent = new Intent(activity, TestFragment.class);
+        bundle.putString("uUrl", item.getUrl());
+        Intent intent = new Intent(activity, MuscleExerciseListActivity.class);
         intent.putExtras(bundle);
         activity.startActivity(intent);
+    }
+
+    // add go to info to start new activity with the exercise info
+    public void viewDetails(int postion){
+        Model item = mList.get(postion);
+        Bundle bundle = new Bundle();
+        bundle.putString("uId", item.getId());
+        bundle.putString("uName", item.getName());
+        bundle.putString("uDesc", item.getDesc());
+        bundle.putString("uUrl", item.getUrl());
+        Intent intent = new Intent(activity, ViewExercise.class);
+        intent.putExtras(bundle);
+        activity.startActivity(intent);
+
     }
 
     public void deleteInfo(int postion) {
@@ -83,7 +100,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView name, desc;
+        TextView name, desc, url;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 

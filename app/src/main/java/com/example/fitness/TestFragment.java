@@ -46,7 +46,6 @@ public class TestFragment extends Fragment {
         mShowBtn = v.findViewById(R.id.show_btn);
 
         db = FirebaseFirestore.getInstance();
-
         // getIntent().getExtras
         Bundle bundle = ((Activity) getContext()).getIntent().getExtras();
 

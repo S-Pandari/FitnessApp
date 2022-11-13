@@ -9,7 +9,7 @@ public class Touch extends ItemTouchHelper.SimpleCallback{
     private MyAdapter adapter;
 
     public Touch(MyAdapter adapter) {
-        super(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
+        super(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT | ItemTouchHelper.UP);
         this.adapter = adapter;
     }
 
@@ -24,8 +24,10 @@ public class Touch extends ItemTouchHelper.SimpleCallback{
         if (direction == ItemTouchHelper.LEFT) {
             adapter.updateInfo(pos);
             adapter.notifyDataSetChanged();
-        } else {
+        } else if (direction == ItemTouchHelper.RIGHT) {
             adapter.deleteInfo(pos);
+        } else if (direction == ItemTouchHelper.UP){
+            adapter.viewDetails(pos);
         }
     }
 }
