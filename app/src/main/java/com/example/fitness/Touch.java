@@ -27,6 +27,7 @@ public class Touch extends ItemTouchHelper.SimpleCallback{
         } else if (direction == ItemTouchHelper.RIGHT) {
             adapter.deleteInfo(pos);
         } else if (direction == ItemTouchHelper.UP){
+            adapter.notifyItemChanged(pos);
             adapter.viewDetails(pos);
         }
     }
