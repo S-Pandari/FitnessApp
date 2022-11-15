@@ -8,11 +8,17 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -46,6 +52,30 @@ public class ShowActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return true;
+    }
+
     public void showInfo() {
         db.collection("Documents").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -54,7 +84,7 @@ public class ShowActivity extends AppCompatActivity {
                         list.clear();
                         for (DocumentSnapshot snapshot : task.getResult()) {
                             Model model = new Model(snapshot.getString("id"), snapshot.getString("name"), snapshot.getString("desc"), snapshot.getString("url"));
-                            list.add(model);
+                            adapter.addToList(model);
                         }
                         adapter.notifyDataSetChanged();
                     }
@@ -65,5 +95,4 @@ public class ShowActivity extends AppCompatActivity {
                     }
                 });
     }
-
 }

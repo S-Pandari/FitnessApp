@@ -2,9 +2,12 @@ package com.example.fitness;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,12 +20,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> implements Filterable {
 
     private ShowActivity activity;
     private List<Model> mList;
+    private List<Model> mListFull;
 
     // for delete
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -30,6 +35,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public MyAdapter(ShowActivity activity, List<Model> mList){
         this.activity = activity;
         this.mList = mList;
+        this.mListFull = new ArrayList<>(mList);
+    }
+
+    public void addToList(Model newItem){
+        mList.add(newItem);
+        mListFull.add(newItem);
+        notifyDataSetChanged();
     }
 
     public void updateInfo(int position) {
@@ -108,4 +120,47 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             desc = itemView.findViewById(R.id.descText);
         }
     }
+
+    @Override
+    public Filter getFilter() {
+        return ExerciseFilter;
+    }
+
+    private Filter ExerciseFilter = new Filter() {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            List<Model> filteredList = new ArrayList<>();
+
+            if(charSequence == null || charSequence.length() == 0){
+                filteredList.addAll(mListFull);
+                Log.d("Filter", "ListShowsAll");
+            }
+            else {
+                Log.d("Filter", "ListBeingFiltered");
+                String filterPattern = charSequence.toString().toLowerCase().trim();
+
+                for(Model exercise : mListFull){
+                    if(exercise.getName().toLowerCase().contains(filterPattern) ){
+                        filteredList.add(exercise);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            Log.d("Filter", Integer.toString(results.count));
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            Log.d("Filter", Integer.toString(mList.size()));
+            mList.clear();
+            mList.addAll((List) filterResults.values);
+            notifyDataSetChanged();
+            Log.d("Filter", "PublishHappened");
+            Log.d("Filter", Integer.toString(filterResults.count));
+        }
+    };
 }
