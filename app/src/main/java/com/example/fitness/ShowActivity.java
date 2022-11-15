@@ -8,11 +8,15 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.Toast;
@@ -20,13 +24,12 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShowActivity extends AppCompatActivity implements Filterable {
+public class ShowActivity extends AppCompatActivity {
 
     private RecyclerView showRecylerView;
     private FirebaseFirestore db;
     private MyAdapter adapter;
     private List<Model> list;
-    private List<Model> listFull;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +48,32 @@ public class ShowActivity extends AppCompatActivity implements Filterable {
         ItemTouchHelper touchHelper = new ItemTouchHelper(new Touch(adapter));
         touchHelper.attachToRecyclerView(showRecylerView);
 
-        listFull = new ArrayList<>(list);
-
         showInfo();
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return true;
     }
 
     public void showInfo() {
@@ -59,7 +84,7 @@ public class ShowActivity extends AppCompatActivity implements Filterable {
                         list.clear();
                         for (DocumentSnapshot snapshot : task.getResult()) {
                             Model model = new Model(snapshot.getString("id"), snapshot.getString("name"), snapshot.getString("desc"), snapshot.getString("url"));
-                            list.add(model);
+                            adapter.addToList(model);
                         }
                         adapter.notifyDataSetChanged();
                     }
@@ -70,40 +95,4 @@ public class ShowActivity extends AppCompatActivity implements Filterable {
                     }
                 });
     }
-
-    @Override
-    public Filter getFilter() {
-        return null;
-    }
-
-    private Filter ExerciseFilter = new Filter() {
-
-        @Override
-        protected FilterResults performFiltering(CharSequence charSequence) {
-            List<Model> filteredList = new ArrayList<>();
-
-            if(charSequence == null || charSequence.length() == 0){
-                filteredList.addAll(listFull);
-            }
-            else {
-                String filterPattern = charSequence.toString().toLowerCase().trim();
-
-                for(Model exercise : listFull){
-                    if(exercise.getName().toLowerCase().contains(filterPattern) ){
-                        filteredList.add(exercise);
-                    }
-                }
-            }
-            FilterResults results = new FilterResults();
-            results.values = filteredList;
-
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            list.clear();
-            list.addAll((List) filterResults.values);
-        }
-    };
 }
