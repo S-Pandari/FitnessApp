@@ -17,6 +17,7 @@
         android:layout_marginStart="17dp"
         android:layout_marginRight="13dp"
         android:layout_marginBottom="601dp"
+        android:maxLength="50"
         android:hint="Enter Name"
         android:inputType="textPersonName" />
 
@@ -31,6 +32,7 @@
         android:layout_marginRight="1dp"
         android:layout_marginBottom="522dp"
         android:gravity="start"
+        android:maxLength="300"
         android:hint="Enter Description"
         android:inputType="textMultiLine" />
 
