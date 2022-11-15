@@ -13,17 +13,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShowActivity extends AppCompatActivity {
+public class ShowActivity extends AppCompatActivity implements Filterable {
 
     private RecyclerView showRecylerView;
     private FirebaseFirestore db;
     private MyAdapter adapter;
     private List<Model> list;
+    private List<Model> listFull;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,8 @@ public class ShowActivity extends AppCompatActivity {
 
         ItemTouchHelper touchHelper = new ItemTouchHelper(new Touch(adapter));
         touchHelper.attachToRecyclerView(showRecylerView);
+
+        listFull = new ArrayList<>(list);
 
         showInfo();
 
@@ -66,4 +71,39 @@ public class ShowActivity extends AppCompatActivity {
                 });
     }
 
+    @Override
+    public Filter getFilter() {
+        return null;
+    }
+
+    private Filter ExerciseFilter = new Filter() {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            List<Model> filteredList = new ArrayList<>();
+
+            if(charSequence == null || charSequence.length() == 0){
+                filteredList.addAll(listFull);
+            }
+            else {
+                String filterPattern = charSequence.toString().toLowerCase().trim();
+
+                for(Model exercise : listFull){
+                    if(exercise.getName().toLowerCase().contains(filterPattern) ){
+                        filteredList.add(exercise);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            list.clear();
+            list.addAll((List) filterResults.values);
+        }
+    };
 }
