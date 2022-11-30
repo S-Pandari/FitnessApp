@@ -87,23 +87,21 @@
         android:id="@+id/view_browser_video"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="190dp"
-        android:layout_marginEnd="16dp"
         android:layout_below="@id/view_user_video"
-        android:text="Browse Video"
-        />
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        android:text="Browse Video" />
+
     <Button
         android:id="@+id/record"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/view_user_video"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="250dp"
-        android:layout_below="@id/view_user_video"
-        android:text="Record"
-        />
+        android:layout_marginStart="75dp"
+        android:layout_marginEnd="220dp"
+        android:layout_toStartOf="@+id/view_browser_video"
+        android:text="Record" />
 </RelativeLayout>
 </ScrollView>

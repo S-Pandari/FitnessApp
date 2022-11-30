@@ -15,6 +15,8 @@ import butterknife.Bind;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,10 +36,11 @@ public class MuscleExerciseListActivity extends AppCompatActivity {
     //@Bind(R.id.edit_name) EditText mName;
     //@Bind(R.id.show_btns) Button mShowBtn;
 
-    private Button mShowBtn,mSaveBtn;
+    private Button mShowBtn,mSaveBtn,mInc,mDec;
     private EditText mName, mDesc, mUrl;
     private FirebaseFirestore db;
     private String uName, uDesc, uId, uUrl;
+    private int fontSize = 15;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,8 @@ public class MuscleExerciseListActivity extends AppCompatActivity {
         mSaveBtn = findViewById(R.id.save_btns);
         mName = findViewById(R.id.edit_names);
         mDesc = findViewById(R.id.edit_descs);
+        mInc = findViewById(R.id.increase_btn);
+        mDec = findViewById(R.id.decrease_btn);
         mUrl = findViewById(R.id.edit_urls);
 
         mShowBtn.setOnClickListener(new View.OnClickListener() {
@@ -91,7 +96,35 @@ public class MuscleExerciseListActivity extends AppCompatActivity {
             }
         });
 
+        mInc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (fontSize < 20) {
+                    fontSize += 1f;
+                    mName.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
+                    mDesc.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
+                    mUrl.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
+                }
+            }
+        });
 
+        mDec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (fontSize > 15) {
+                    fontSize -= 1f;
+                    mName.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
+                    mDesc.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
+                    mUrl.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
+                }
+            }
+        });
+
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
     }
 
     private void updateToFireStore(String id, String name, String desc, String url) {
