@@ -14,6 +14,7 @@ import butterknife.Bind;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -42,7 +43,11 @@ public class MuscleExerciseListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_muscle_exercise_list);
+        int orientation = getResources().getConfiguration().orientation;
+        if(orientation == Configuration.ORIENTATION_PORTRAIT)
+            setContentView(R.layout.activity_muscle_exercise_list);
+        if(orientation == Configuration.ORIENTATION_LANDSCAPE)
+            setContentView(R.layout.activity_muscle_exercise_list_landscape);
         ButterKnife.bind(this);
         db = FirebaseFirestore.getInstance();
 
