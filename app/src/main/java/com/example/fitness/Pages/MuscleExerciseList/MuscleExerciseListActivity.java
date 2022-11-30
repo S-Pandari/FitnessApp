@@ -1,4 +1,5 @@
 package com.example.fitness.Pages.MuscleExerciseList;
+import com.example.fitness.MainActivity;
 import com.example.fitness.R;
 import com.example.fitness.ShowActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,7 +37,7 @@ public class MuscleExerciseListActivity extends AppCompatActivity {
     //@Bind(R.id.edit_name) EditText mName;
     //@Bind(R.id.show_btns) Button mShowBtn;
 
-    private Button mShowBtn,mSaveBtn,mInc,mDec;
+    private Button mShowBtn,mSaveBtn,mInc,mDec,mHome;
     private EditText mName, mDesc, mUrl;
     private FirebaseFirestore db;
     private String uName, uDesc, uId, uUrl;
@@ -56,6 +57,14 @@ public class MuscleExerciseListActivity extends AppCompatActivity {
         mInc = findViewById(R.id.increase_btn);
         mDec = findViewById(R.id.decrease_btn);
         mUrl = findViewById(R.id.edit_urls);
+        mHome = findViewById(R.id.Backhome_btn);
+
+        mHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            }
+        });
 
         mShowBtn.setOnClickListener(new View.OnClickListener() {
             @Override
