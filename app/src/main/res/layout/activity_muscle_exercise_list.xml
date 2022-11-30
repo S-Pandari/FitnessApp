@@ -82,7 +82,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/show_btns"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="85dp"
+        android:layout_marginEnd="50dp"
         android:layout_marginTop="-5dp"
         android:text="Dec"
         android:textSize="15sp" />
@@ -93,9 +93,22 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/show_btns"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="220dp"
+        android:layout_marginEnd="150dp"
         android:layout_toStartOf="@+id/decrease_btn"
         android:layout_marginTop="-5dp"
         android:text="Inc"
         android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/Backhome_btn"
+        android:layout_width="107dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/show_btns"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-5dp"
+        android:layout_marginEnd="250dp"
+        android:layout_toStartOf="@+id/increase_btn"
+        android:text="Home"
+        android:textSize="15sp" />
+
 </RelativeLayout>
