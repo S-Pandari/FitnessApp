@@ -104,6 +104,8 @@ public class MuscleExerciseListActivity extends AppCompatActivity {
                     mName.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
                     mDesc.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
                     mUrl.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
+                    mShowBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
+                    mSaveBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
                 }
             }
         });
@@ -116,6 +118,8 @@ public class MuscleExerciseListActivity extends AppCompatActivity {
                     mName.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
                     mDesc.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
                     mUrl.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
+                    mShowBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
+                    mSaveBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
                 }
             }
         });
