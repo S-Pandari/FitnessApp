@@ -1,6 +1,7 @@
 package com.example.fitness.Pages.ViewExercise;
 import static androidx.activity.result.ActivityResultCallerKt.registerForActivityResult;
 
+import com.example.fitness.MainActivity;
 import com.example.fitness.R;
 import com.example.fitness.YoutubeConfig;
 import com.google.android.youtube.player.YouTubeBaseActivity;
@@ -15,6 +16,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.MediaController;
@@ -36,8 +38,9 @@ public class ViewExercise extends YouTubeBaseActivity {
 
 
     private TextView viewName, viewDesc;
-    private Button btnPlay, btnBrowse, btnRecord;
+    private Button btnPlay, btnBrowse, btnRecord, btnInc, btnDec,btnHome;
     private String url;
+    private int descFontSize = 15;
     YouTubePlayerView mYoutubePlayerView;
     YouTubePlayer.OnInitializedListener mOnInitializedListener;
 
@@ -115,6 +118,9 @@ public class ViewExercise extends YouTubeBaseActivity {
         btnPlay = findViewById(R.id.view_play);
         btnRecord = findViewById(R.id.record);
         btnBrowse = findViewById(R.id.view_browser_video);
+        btnInc = findViewById(R.id.inc_view_btn);
+        btnDec = findViewById(R.id.dec_view_btn);
+        btnHome = findViewById(R.id.home_view_btn);
         mYoutubePlayerView = (YouTubePlayerView) findViewById(R.id.view_youtube);
 
         Bundle extras = getIntent().getExtras();
@@ -160,6 +166,33 @@ public class ViewExercise extends YouTubeBaseActivity {
 //                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 //                i.setType("video/*");
 //                startActivityForResult(i, PICK_FROM_FILE);
+            }
+        });
+
+        btnInc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (descFontSize < 20) {
+                    descFontSize += 1f;
+                    viewDesc.setTextSize(TypedValue.COMPLEX_UNIT_SP, descFontSize);
+                }
+            }
+        });
+
+        btnDec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (descFontSize > 15) {
+                    descFontSize -= 1f;
+                    viewDesc.setTextSize(TypedValue.COMPLEX_UNIT_SP, descFontSize);
+                }
+            }
+        });
+
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
 
